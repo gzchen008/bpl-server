@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bpl.tucao.dao.BplFeedbackDao">
+    
+	<sql id="bplFeedbackColumns">
+		a.id AS "id",
+		a.hotid AS "hotid",
+		a.status AS "status",
+		a.content AS "content",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime"
+	</sql>
+	
+	<sql id="bplFeedbackJoins">
+	</sql>
+    
+	<select id="get" resultType="BplFeedback">
+		SELECT 
+			<include refid="bplFeedbackColumns"/>
+		FROM bpl_feedback a
+		<include refid="bplFeedbackJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BplFeedback">
+		SELECT 
+			<include refid="bplFeedbackColumns"/>
+		FROM bpl_feedback a
+		<include refid="bplFeedbackJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BplFeedback">
+		SELECT 
+			<include refid="bplFeedbackColumns"/>
+		FROM bpl_feedback a
+		<include refid="bplFeedbackJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO bpl_feedback(
+			id,
+			hotid,
+			status,
+			content,
+			create_time,
+			update_time
+		) VALUES (
+			#{id},
+			#{hotid},
+			#{status},
+			#{content},
+			#{createTime},
+			#{updateTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE bpl_feedback SET 	
+			hotid = #{hotid},
+			status = #{status},
+			content = #{content},
+			create_time = #{createTime},
+			update_time = #{updateTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM bpl_feedback
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bpl.tucao.dao.BplHotDao">
+    
+	<sql id="bplHotColumns">
+		a.id AS "id",
+		a.tucao_count AS "tucaoCount",
+		a.content AS "content",
+		a.status AS "status",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime"
+	</sql>
+	
+	<sql id="bplHotJoins">
+	</sql>
+    
+	<select id="get" resultType="BplHot">
+		SELECT 
+			<include refid="bplHotColumns"/>
+		FROM bpl_hot a
+		<include refid="bplHotJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BplHot">
+		SELECT 
+			<include refid="bplHotColumns"/>
+		FROM bpl_hot a
+		<include refid="bplHotJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BplHot">
+		SELECT 
+			<include refid="bplHotColumns"/>
+		FROM bpl_hot a
+		<include refid="bplHotJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO bpl_hot(
+			id,
+			tucao_count,
+			content,
+			status,
+			create_time,
+			update_time
+		) VALUES (
+			#{id},
+			#{tucaoCount},
+			#{content},
+			#{status},
+			#{createTime},
+			#{updateTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE bpl_hot SET 	
+			tucao_count = #{tucaoCount},
+			content = #{content},
+			status = #{status},
+			create_time = #{createTime},
+			update_time = #{updateTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM bpl_hot
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

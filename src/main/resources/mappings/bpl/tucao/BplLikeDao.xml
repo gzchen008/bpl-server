@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bpl.tucao.dao.BplLikeDao">
+    
+	<sql id="bplLikeColumns">
+		a.id AS "id",
+		a.hotid AS "hotid",
+		a.userid AS "userid",
+		a.nick_name AS "nickName",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime"
+	</sql>
+	
+	<sql id="bplLikeJoins">
+	</sql>
+    
+	<select id="get" resultType="BplLike">
+		SELECT 
+			<include refid="bplLikeColumns"/>
+		FROM bpl_like a
+		<include refid="bplLikeJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BplLike">
+		SELECT 
+			<include refid="bplLikeColumns"/>
+		FROM bpl_like a
+		<include refid="bplLikeJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BplLike">
+		SELECT 
+			<include refid="bplLikeColumns"/>
+		FROM bpl_like a
+		<include refid="bplLikeJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO bpl_like(
+			id,
+			hotid,
+			userid,
+			nick_name,
+			create_time,
+			update_time
+		) VALUES (
+			#{id},
+			#{hotid},
+			#{userid},
+			#{nickName},
+			#{createTime},
+			#{updateTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE bpl_like SET 	
+			hotid = #{hotid},
+			userid = #{userid},
+			nick_name = #{nickName},
+			create_time = #{createTime},
+			update_time = #{updateTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM bpl_like
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

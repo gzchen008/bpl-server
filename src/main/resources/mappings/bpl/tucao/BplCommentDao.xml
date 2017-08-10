@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bpl.tucao.dao.BplCommentDao">
+    
+	<sql id="bplCommentColumns">
+		a.id AS "id",
+		a.hotid AS "hotid",
+		a.userid AS "userid",
+		a.nick_name AS "nickName",
+		a.content AS "content",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime"
+	</sql>
+	
+	<sql id="bplCommentJoins">
+	</sql>
+    
+	<select id="get" resultType="BplComment">
+		SELECT 
+			<include refid="bplCommentColumns"/>
+		FROM bpl_comment a
+		<include refid="bplCommentJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BplComment">
+		SELECT 
+			<include refid="bplCommentColumns"/>
+		FROM bpl_comment a
+		<include refid="bplCommentJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BplComment">
+		SELECT 
+			<include refid="bplCommentColumns"/>
+		FROM bpl_comment a
+		<include refid="bplCommentJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO bpl_comment(
+			id,
+			hotid,
+			userid,
+			nick_name,
+			content,
+			create_time,
+			update_time
+		) VALUES (
+			#{id},
+			#{hotid},
+			#{userid},
+			#{nickName},
+			#{content},
+			#{createTime},
+			#{updateTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE bpl_comment SET 	
+			hotid = #{hotid},
+			userid = #{userid},
+			nick_name = #{nickName},
+			content = #{content},
+			create_time = #{createTime},
+			update_time = #{updateTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM bpl_comment
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
