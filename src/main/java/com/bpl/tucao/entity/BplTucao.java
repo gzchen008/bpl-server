@@ -24,6 +24,7 @@ public class BplTucao extends DataEntity<BplTucao> {
 	private Integer hotid;		// hotid
 	private Date createTime;		// create_time
 	private Date updateTime;		// update_time
+	private String flag;		// flag
 	
 	public BplTucao() {
 		super();
@@ -91,6 +92,15 @@ public class BplTucao extends DataEntity<BplTucao> {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	
+	@Length(min=0, max=11, message="flag长度必须介于 0 和 11 之间")
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 	
 }

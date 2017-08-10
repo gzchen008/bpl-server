@@ -10,7 +10,8 @@
 		a.gender AS "gender",
 		a.hotid AS "hotid",
 		a.create_time AS "createTime",
-		a.update_time AS "updateTime"
+		a.update_time AS "updateTime",
+		a.flag AS "flag"
 	</sql>
 	
 	<sql id="bplTucaoJoins">
@@ -31,6 +32,12 @@
 		<include refid="bplTucaoJoins"/>
 		<where>
 			
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>
+			<if test="userid != null and userid != ''">
+				AND a.userid = #{userid}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -60,21 +67,25 @@
 	
 	<insert id="insert">
 		INSERT INTO bpl_tucao(
+			id,
 			content,
 			userid,
 			nick_name,
 			gender,
 			hotid,
 			create_time,
-			update_time
+			update_time,
+			flag
 		) VALUES (
+			#{id},
 			#{content},
 			#{userid},
 			#{nickName},
 			#{gender},
 			#{hotid},
 			#{createTime},
-			#{updateTime}
+			#{updateTime},
+			#{flag}
 		)
 	</insert>
 	
@@ -86,7 +97,8 @@
 			gender = #{gender},
 			hotid = #{hotid},
 			create_time = #{createTime},
-			update_time = #{updateTime}
+			update_time = #{updateTime},
+			flag = #{flag}
 		WHERE id = #{id}
 	</update>
 	
