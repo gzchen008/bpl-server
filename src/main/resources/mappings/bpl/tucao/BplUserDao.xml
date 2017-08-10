@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bpl.tucao.dao.BplUserDao">
+    
+	<sql id="bplUserColumns">
+		a.id AS "id",
+		a.openid AS "openid",
+		a.nick_name AS "nickName",
+		a.avatar_url AS "avatarUrl",
+		a.gender AS "gender",
+		a.country AS "country",
+		a.province AS "province",
+		a.city AS "city",
+		a.create_time AS "createTime"
+	</sql>
+	
+	<sql id="bplUserJoins">
+	</sql>
+    
+	<select id="get" resultType="BplUser">
+		SELECT 
+			<include refid="bplUserColumns"/>
+		FROM bpl_user a
+		<include refid="bplUserJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BplUser">
+		SELECT 
+			<include refid="bplUserColumns"/>
+		FROM bpl_user a
+		<include refid="bplUserJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BplUser">
+		SELECT 
+			<include refid="bplUserColumns"/>
+		FROM bpl_user a
+		<include refid="bplUserJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO bpl_user(
+			id,
+			openid,
+			nick_name,
+			avatar_url,
+			gender,
+			country,
+			province,
+			city,
+			create_time
+		) VALUES (
+			#{id},
+			#{openid},
+			#{nickName},
+			#{avatarUrl},
+			#{gender},
+			#{country},
+			#{province},
+			#{city},
+			#{createTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE bpl_user SET 	
+			openid = #{openid},
+			nick_name = #{nickName},
+			avatar_url = #{avatarUrl},
+			gender = #{gender},
+			country = #{country},
+			province = #{province},
+			city = #{city},
+			create_time = #{createTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM bpl_user
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
