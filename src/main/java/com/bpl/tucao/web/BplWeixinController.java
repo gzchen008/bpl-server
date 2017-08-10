@@ -1,23 +1,60 @@
 package com.bpl.tucao.web;
 
+import com.bpl.tucao.utils.WeixinUtil;
+import com.thinkgem.jeesite.common.web.BaseController;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by johnnwang on 2017/8/10.
  */
 @Controller
 @RequestMapping(value = "/weixin")
-public class BplWeixinController {
-    private static final Logger LOGGER = Logger.getLogger(BplWeixinController.class);
+public class BplWeixinController extends BaseController {
     @RequestMapping(value = "/login")
-    @ResponseBody
-     public String login(String id){
-         LOGGER.info("login");
-         System.out.println("登录");
-         return "success";
-     }
+    //@ResponseBody
+    public void login(@RequestParam(required = true) String wxCode, HttpSession session, HttpServletResponse response) {
+        logger.info("login");
+        String sessionKey = null;
+        Map<String,String> result = new HashMap<String, String>();
+        try {
+            Map<String, Object> wxSession = WeixinUtil.getWxSession(wxCode);
+            if (null == wxSession) {
+                result.put("error","wxSession == null");
+                renderString(response,result);
+                return;
+            }
+            if (wxSession.containsKey("errcode")) {
+                result.put("error","errcode!=null");
+                renderString(response,result);
+                return;
+            }
+            String wxOpenId = (String) wxSession.get("openid");
+            String wxSessionKey = (String) wxSession.get("session_key");
+            StringBuffer sb = new StringBuffer();
+            sb.append(wxSessionKey).append("#").append(wxOpenId);
+            sessionKey = sb.toString();
+        } catch (IOException e) {
+            logger.error("failed to get wxSession", e);
+            result.put("error","failed to get wxSession");
+            renderString(response,result);
+            return;
+        }
+        String sessionId = UUID.randomUUID().toString();
+        session.setAttribute(sessionId, sessionKey);
+        session.setMaxInactiveInterval(60 * 60);
+        result.put("sessionId",sessionId);
+        renderString(response,result);
+    }
 }
