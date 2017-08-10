@@ -61,14 +61,12 @@
 	
 	<insert id="insert">
 		INSERT INTO bpl_hot(
-			id,
 			tucao_count,
 			content,
 			status,
 			create_time,
 			update_time
 		) VALUES (
-			#{id},
 			#{tucaoCount},
 			#{content},
 			#{status},

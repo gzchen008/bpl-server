@@ -34,25 +34,25 @@
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">tucao_count：</label>
+			<label class="control-label">支持次数：</label>
 			<div class="controls">
 				<form:input path="tucaoCount" htmlEscape="false" maxlength="11" class="input-xlarge  digits"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">content：</label>
+			<label class="control-label">内容：</label>
 			<div class="controls">
 				<form:textarea path="content" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">status：</label>
+			<label class="control-label">状态：</label>
 			<div class="controls">
 				<form:input path="status" htmlEscape="false" maxlength="11" class="input-xlarge  digits"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">create_time：</label>
+			<label class="control-label">创建时间：</label>
 			<div class="controls">
 				<input name="createTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${bplHot.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
@@ -60,7 +60,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">update_time：</label>
+			<label class="control-label">更新时间：</label>
 			<div class="controls">
 				<input name="updateTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${bplHot.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"

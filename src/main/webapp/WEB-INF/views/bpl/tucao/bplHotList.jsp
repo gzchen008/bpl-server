@@ -37,11 +37,11 @@
 		<thead>
 			<tr>
 				<th>id</th>
-				<th>tucao_count</th>
-				<th>content</th>
-				<th>status</th>
-				<th>create_time</th>
-				<th>update_time</th>
+				<th>支持次数</th>
+				<th>内容</th>
+				<th>状态</th>
+				<th>创建时间</th>
+				<th>更新时间</th>
 				<shiro:hasPermission name="tucao:bplHot:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>

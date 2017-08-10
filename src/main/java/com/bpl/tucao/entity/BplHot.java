@@ -17,11 +17,11 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 public class BplHot extends DataEntity<BplHot> {
 	
 	private static final long serialVersionUID = 1L;
-	private Integer tucaoCount;		// tucao_count
-	private String content;		// content
-	private Integer status;		// status
-	private Date createTime;		// create_time
-	private Date updateTime;		// update_time
+	private Integer tucaoCount;		// 支持次数
+	private String content;		// 内容
+	private Integer status;		// 状态
+	private Date createTime;		// 创建时间
+	private Date updateTime;		// 更新时间
 	
 	public BplHot() {
 		super();
@@ -39,7 +39,7 @@ public class BplHot extends DataEntity<BplHot> {
 		this.tucaoCount = tucaoCount;
 	}
 	
-	@Length(min=0, max=255, message="content长度必须介于 0 和 255 之间")
+	@Length(min=0, max=255, message="内容长度必须介于 0 和 255 之间")
 	public String getContent() {
 		return content;
 	}

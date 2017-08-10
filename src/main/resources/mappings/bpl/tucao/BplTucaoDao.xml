@@ -67,7 +67,6 @@
 	
 	<insert id="insert">
 		INSERT INTO bpl_tucao(
-			id,
 			content,
 			userid,
 			nick_name,
@@ -77,7 +76,6 @@
 			update_time,
 			flag
 		) VALUES (
-			#{id},
 			#{content},
 			#{userid},
 			#{nickName},
