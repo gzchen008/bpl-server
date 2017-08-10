@@ -25,6 +25,12 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>ID：</label>
+				<form:input path="id" htmlEscape="false" maxlength="11" class="input-medium"/>
+			</li>
+			<li><label>用户ID：</label>
+				<form:input path="userid" htmlEscape="false" maxlength="255" class="input-medium"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -33,13 +39,13 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>content</th>
-				<th>userid</th>
-				<th>nick_name</th>
-				<th>gender</th>
-				<th>hotid</th>
-				<th>create_time</th>
-				<th>update_time</th>
+				<th>内容</th>
+				<th>用户ID</th>
+				<th>昵称</th>
+				<th>性别</th>
+				<th>热点ID</th>
+				<th>创建时间</th>
+				<th>更新时间</th>
 				<shiro:hasPermission name="tucao:bplTucao:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>

@@ -17,13 +17,14 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 public class BplTucao extends DataEntity<BplTucao> {
 	
 	private static final long serialVersionUID = 1L;
-	private String content;		// content
-	private Integer userid;		// userid
-	private String nickName;		// nick_name
-	private Integer gender;		// gender
-	private Integer hotid;		// hotid
-	private Date createTime;		// create_time
-	private Date updateTime;		// update_time
+	private String content;		// 内容
+	private Integer userid;		// 用户ID
+	private String nickName;		// 昵称
+	private Integer gender;		// 性别
+	private Integer hotid;		// 热点ID
+	private Date createTime;		// 创建时间
+	private Date updateTime;		// 更新时间
+	private String flag;		// flag
 	
 	public BplTucao() {
 		super();
@@ -33,7 +34,7 @@ public class BplTucao extends DataEntity<BplTucao> {
 		super(id);
 	}
 
-	@Length(min=0, max=512, message="content长度必须介于 0 和 512 之间")
+	@Length(min=0, max=512, message="内容长度必须介于 0 和 512 之间")
 	public String getContent() {
 		return content;
 	}
@@ -50,7 +51,7 @@ public class BplTucao extends DataEntity<BplTucao> {
 		this.userid = userid;
 	}
 	
-	@Length(min=0, max=127, message="nick_name长度必须介于 0 和 127 之间")
+	@Length(min=0, max=127, message="昵称长度必须介于 0 和 127 之间")
 	public String getNickName() {
 		return nickName;
 	}
@@ -91,6 +92,15 @@ public class BplTucao extends DataEntity<BplTucao> {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	
+	@Length(min=0, max=11, message="flag长度必须介于 0 和 11 之间")
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 	
 }

@@ -46,7 +46,7 @@ public class BplTucaoController extends BaseController {
 		return entity;
 	}
 	
-	//@RequiresPermissions("tucao:bplTucao:view")
+	@RequiresPermissions("tucao:bplTucao:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(BplTucao bplTucao, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<BplTucao> page = bplTucaoService.findPage(new Page<BplTucao>(request, response), bplTucao); 
