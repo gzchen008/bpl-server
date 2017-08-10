@@ -1,5 +1,6 @@
 package com.bpl.tucao.web;
 
+import com.bpl.tucao.entity.BplUser;
 import com.bpl.tucao.utils.WeixinUtil;
 import com.thinkgem.jeesite.common.web.BaseController;
 import org.apache.log4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -22,9 +24,9 @@ import java.util.UUID;
 @Controller
 @RequestMapping(value = "/weixin")
 public class BplWeixinController extends BaseController {
+
     @RequestMapping(value = "/login")
-    //@ResponseBody
-    public void login(@RequestParam(required = true) String wxCode, HttpSession session, HttpServletResponse response) {
+    public void login(@RequestParam(required = true,value = "code") String wxCode, HttpSession session, HttpServletResponse response) {
         logger.info("login");
         String sessionKey = null;
         Map<String,String> result = new HashMap<String, String>();
@@ -57,4 +59,27 @@ public class BplWeixinController extends BaseController {
         result.put("sessionId",sessionId);
         renderString(response,result);
     }
+
+    @RequestMapping(value = "/user")
+    public void getUserInfo(@RequestParam(required = true,value = "userInfo")BplUser bplUser, HttpSession session,
+                            HttpServletResponse response,
+                            @RequestParam(required = true,defaultValue = "sessionId")String sessionId) {
+        Map<String,String> result = new HashMap<String, String>();
+        String sessionKey = (String)session.getAttribute(sessionId);
+        String openId = sessionKey.split("#")[1];
+        bplUser.setOpenid(openId);
+        bplUser.setCreateTime(new Date());
+        System.out.println(bplUser.toString());
+        result.put("sessionId",sessionId);
+        renderString(response,result);
+    }
+
+    @RequestMapping(value = "/test")
+    //@ResponseBody
+    public void  test(HttpServletResponse response){
+        Map<String,String> result = new HashMap<String, String>();
+        result.put("sessionId","success");
+        renderString(response,result);
+    }
+
 }
