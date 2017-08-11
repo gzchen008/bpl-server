@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  * Created by cgzchen on 2017/8/10.
@@ -24,6 +25,10 @@ public class TucaoWechatController extends BaseController {
 
     @RequestMapping("/add")
     public void add(@RequestBody BplTucao bplTucao) {
+        Date time = new Date();
+        bplTucao.setCreateTime(time);
+        bplTucao.setUpdateTime(time);
+        bplTucao.setFlag("0");
         bplTucaoService.save(bplTucao);
     }
 
