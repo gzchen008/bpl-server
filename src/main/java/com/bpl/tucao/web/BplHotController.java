@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bpl.tucao.entity.BplComment;
+import com.bpl.tucao.entity.BplFeedback;
 import com.bpl.tucao.service.BplCommentService;
+import com.bpl.tucao.service.BplFeedbackService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,6 +46,9 @@ public class BplHotController extends BaseController {
     @Autowired
     private BplCommentService bplCommentService;
 
+    @Autowired
+    private BplFeedbackService bplFeedbackService;
+
     @ModelAttribute
     public BplHot get(@RequestParam(required = false) String id) {
         BplHot entity = null;
@@ -65,6 +70,7 @@ public class BplHotController extends BaseController {
         List<BplHot> hotList = page.getList();
         //TODO
         List<BplComment> commentList = bplCommentService.findList(new BplComment());
+        List<BplFeedback> feedbackList = bplFeedbackService.findList(new BplFeedback());
 
         for (BplHot hot : hotList) {
             Map<String, String> objMap = new HashMap<String, String>();
@@ -75,8 +81,16 @@ public class BplHotController extends BaseController {
                     hot.getSqlMap().put("comments", newComment);
                 }
             }
+            for (BplFeedback feedback : feedbackList) {
+                if (feedback.getHotid().toString().equals(hot.getId())) {
+                    String newFeedback = hot.getSqlMap().get("feedbacks") + "," + feedback.getContent();
+                    hot.getSqlMap().put("feedbacks", newFeedback);
+                }
+            }
             logger.debug("hot:{}", hot);
         }
+
+
 
         model.addAttribute("page", page);
         return "bpl/tucao/bplHotList";

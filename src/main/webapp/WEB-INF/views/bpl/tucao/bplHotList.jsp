@@ -74,7 +74,9 @@
 				<td>
 					${bplHot.sqlMap.comments}
 				</td>
-				<td></td>
+				<td>
+					${bplHot.sqlMap.feedbacks}
+				</td>
 				<td>
 					<fmt:formatDate value="${bplHot.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
