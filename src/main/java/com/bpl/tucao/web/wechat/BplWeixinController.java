@@ -1,15 +1,19 @@
 package com.bpl.tucao.web.wechat;
 
 import com.bpl.tucao.entity.BplUser;
+import com.bpl.tucao.service.BplUserService;
+import com.bpl.tucao.utils.SessionUtils;
 import com.bpl.tucao.utils.WeixinUtil;
 import com.thinkgem.jeesite.common.web.BaseController;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -24,10 +28,13 @@ import java.util.UUID;
 @Controller
 @RequestMapping(value = "/wx")
 public class BplWeixinController extends BaseController {
+    @Autowired
+    private BplUserService bplUserService;
 
     @RequestMapping(value = "/login")
-    public void login(@RequestParam(required = true,value = "code") String wxCode, HttpSession session, HttpServletResponse response) {
-        logger.info("login code:"+wxCode);
+    public void login(@RequestParam(required = true,value = "code") String wxCode, HttpSession session,
+                      HttpServletResponse response) {
+        logger.error("login code:" + wxCode);
         String sessionKey = null;
         Map<String,String> result = new HashMap<String, String>();
         try {
@@ -47,30 +54,41 @@ public class BplWeixinController extends BaseController {
             StringBuffer sb = new StringBuffer();
             sb.append(wxSessionKey).append("#").append(wxOpenId);
             sessionKey = sb.toString();
+
+            System.out.println("session_key:" + sessionKey);
+            String key3rd = UUID.randomUUID().toString();
+
+            session.setAttribute(key3rd, sessionKey);
+            result.put("sessionId",session.getId());
+            result.put("key3rd",key3rd);
+            renderString(response,result);
         } catch (IOException e) {
             logger.error("failed to get wxSession", e);
             result.put("error","failed to get wxSession");
             renderString(response,result);
             return;
         }
-        String sessionId = UUID.randomUUID().toString();
-        session.setAttribute(sessionId, sessionKey);
-        session.setMaxInactiveInterval(60 * 60);
-        result.put("sessionId",sessionId);
-        renderString(response,result);
     }
 
     @RequestMapping(value = "/user")
     public void getUserInfo(@RequestParam(required = true,value = "userInfo")BplUser bplUser, HttpSession session,
                             HttpServletResponse response,
-                            @RequestParam(required = true,defaultValue = "sessionId")String sessionId) {
+                            @RequestParam(required = true,defaultValue = "key3rd")String key3rd) {
         Map<String,String> result = new HashMap<String, String>();
-        String sessionKey = (String)session.getAttribute(sessionId);
+        String sessionKey = (String)session.getAttribute(key3rd);
+        if(sessionKey == null){
+            result.put("error","sessionKey == null");
+            renderString(response,result);
+            logger.error("Failed to get sessionKey");
+            return;
+        }
         String openId = sessionKey.split("#")[1];
         bplUser.setOpenid(openId);
         bplUser.setCreateTime(new Date());
-        System.out.println(bplUser.toString());
-        result.put("sessionId",sessionId);
+        session.setAttribute("userInfo",bplUser);
+        result.put("sessionId",session.getId());
+        result.put("key3rd",key3rd);
+        logger.info("success to get result");
         renderString(response,result);
     }
 
