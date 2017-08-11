@@ -1,4 +1,4 @@
-package com.bpl.tucao.web;
+package com.bpl.tucao.web.wechat;
 
 import com.bpl.tucao.dao.BplFeedBackWxDao;
 import com.bpl.tucao.dao.BplHotCommentWxDao;
