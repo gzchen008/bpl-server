@@ -12,7 +12,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 /**
  * 吐槽热点Entity
  * @author yongdaicui
- * @version 2017-08-10
+ * @version 2017-08-11
  */
 public class BplHot extends DataEntity<BplHot> {
 	

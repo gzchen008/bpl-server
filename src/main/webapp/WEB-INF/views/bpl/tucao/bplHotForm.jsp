@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>吐槽热点模块管理</title>
+	<title>吐槽热点管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,8 +27,8 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/tucao/bplHot/">吐槽热点模块列表</a></li>
-		<li class="active"><a href="${ctx}/tucao/bplHot/form?id=${bplHot.id}">吐槽热点模块<shiro:hasPermission name="tucao:bplHot:edit">${not empty bplHot.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="tucao:bplHot:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/tucao/bplHot/">吐槽热点列表</a></li>
+		<li class="active"><a href="${ctx}/tucao/bplHot/form?id=${bplHot.id}">吐槽热点<shiro:hasPermission name="tucao:bplHot:edit">${not empty bplHot.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="tucao:bplHot:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="bplHot" action="${ctx}/tucao/bplHot/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -48,7 +48,10 @@
 		<div class="control-group">
 			<label class="control-label">状态：</label>
 			<div class="controls">
-				<form:input path="status" htmlEscape="false" maxlength="11" class="input-xlarge  digits"/>
+				<form:select path="status" class="input-xlarge ">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('hot_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 			</div>
 		</div>
 		<div class="control-group">

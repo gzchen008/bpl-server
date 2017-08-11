@@ -10,9 +10,9 @@ import com.bpl.tucao.entity.BplHot;
 /**
  * 吐槽热点DAO接口
  * @author yongdaicui
- * @version 2017-08-10
+ * @version 2017-08-11
  */
 @MyBatisDao
 public interface BplHotDao extends CrudDao<BplHot> {
-
+	
 }

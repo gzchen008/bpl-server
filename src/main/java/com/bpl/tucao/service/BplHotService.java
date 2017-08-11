@@ -16,7 +16,7 @@ import com.bpl.tucao.dao.BplHotDao;
 /**
  * 吐槽热点Service
  * @author yongdaicui
- * @version 2017-08-10
+ * @version 2017-08-11
  */
 @Service
 @Transactional(readOnly = true)

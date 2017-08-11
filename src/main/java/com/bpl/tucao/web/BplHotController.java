@@ -25,7 +25,7 @@ import com.bpl.tucao.service.BplHotService;
 /**
  * 吐槽热点Controller
  * @author yongdaicui
- * @version 2017-08-10
+ * @version 2017-08-11
  */
 @Controller
 @RequestMapping(value = "${adminPath}/tucao/bplHot")
@@ -68,7 +68,7 @@ public class BplHotController extends BaseController {
 			return form(bplHot, model);
 		}
 		bplHotService.save(bplHot);
-		addMessage(redirectAttributes, "保存吐槽热点模块成功");
+		addMessage(redirectAttributes, "保存吐槽热点成功");
 		return "redirect:"+Global.getAdminPath()+"/tucao/bplHot/?repage";
 	}
 	
@@ -76,7 +76,8 @@ public class BplHotController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(BplHot bplHot, RedirectAttributes redirectAttributes) {
 		bplHotService.delete(bplHot);
-		addMessage(redirectAttributes, "删除吐槽热点模块成功");
+		addMessage(redirectAttributes, "删除吐槽热点成功");
 		return "redirect:"+Global.getAdminPath()+"/tucao/bplHot/?repage";
 	}
+
 }
