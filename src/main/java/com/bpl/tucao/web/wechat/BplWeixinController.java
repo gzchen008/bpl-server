@@ -70,7 +70,6 @@ public class BplWeixinController extends BaseController {
     public void getUserInfo(@RequestParam(required = true, value = "userInfo") BplUser bplUser, HttpSession session,
                             HttpServletResponse response,
                             @RequestParam(required = true, defaultValue = "key3rd") String key3rd) {
-        logger.info("getUserInfo session id ={}", session.getId());
         Map<String, String> result = new HashMap<String, String>();
         String openId = SessionUtils.getOpenId(session,key3rd);
         if (openId == null) {
@@ -81,6 +80,7 @@ public class BplWeixinController extends BaseController {
         }
         bplUser.setOpenid(openId);
         bplUser.setCreateTime(new Date());
+        logger.info("userInfo:" + bplUser);
         session.setAttribute("userInfo", bplUserService.saveOrget(bplUser));
         result.put("sessionId", session.getId());
         result.put("key3rd", key3rd);

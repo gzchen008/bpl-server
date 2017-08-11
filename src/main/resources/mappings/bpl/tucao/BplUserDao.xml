@@ -75,7 +75,6 @@
 	
 	<insert id="insert">
 		INSERT INTO bpl_user(
-			id,
 			openid,
 			nick_name,
 			avatar_url,
@@ -85,7 +84,6 @@
 			city,
 			create_time
 		) VALUES (
-			#{id},
 			#{openid},
 			#{nickName},
 			#{avatarUrl},
