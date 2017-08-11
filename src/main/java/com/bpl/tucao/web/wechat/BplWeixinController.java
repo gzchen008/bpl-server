@@ -32,21 +32,23 @@ public class BplWeixinController extends BaseController {
     private BplUserService bplUserService;
 
     @RequestMapping(value = "/login")
-    public void login(@RequestParam(required = true,value = "code") String wxCode, HttpSession session,
+    public void login(@RequestParam(required = true, value = "code") String wxCode, HttpSession session,
                       HttpServletResponse response) {
+        logger.info("login session id ={}", session.getId());
+
         logger.error("login code:" + wxCode);
         String sessionKey = null;
-        Map<String,String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<String, String>();
         try {
             Map<String, Object> wxSession = WeixinUtil.getWxSession(wxCode);
             if (null == wxSession) {
-                result.put("error","wxSession == null");
-                renderString(response,result);
+                result.put("error", "wxSession == null");
+                renderString(response, result);
                 return;
             }
             if (wxSession.containsKey("errcode")) {
-                result.put("error","errcode!=null");
-                renderString(response,result);
+                result.put("error", "errcode!=null");
+                renderString(response, result);
                 return;
             }
             String wxOpenId = (String) wxSession.get("openid");
@@ -59,45 +61,46 @@ public class BplWeixinController extends BaseController {
             String key3rd = UUID.randomUUID().toString();
 
             session.setAttribute(key3rd, sessionKey);
-            result.put("sessionId",session.getId());
-            result.put("key3rd",key3rd);
-            renderString(response,result);
+            result.put("sessionId", session.getId());
+            result.put("key3rd", key3rd);
+            renderString(response, result);
         } catch (IOException e) {
             logger.error("failed to get wxSession", e);
-            result.put("error","failed to get wxSession");
-            renderString(response,result);
+            result.put("error", "failed to get wxSession");
+            renderString(response, result);
             return;
         }
     }
 
     @RequestMapping(value = "/user")
-    public void getUserInfo(@RequestParam(required = true,value = "userInfo")BplUser bplUser, HttpSession session,
+    public void getUserInfo(@RequestParam(required = true, value = "userInfo") BplUser bplUser, HttpSession session,
                             HttpServletResponse response,
-                            @RequestParam(required = true,defaultValue = "key3rd")String key3rd) {
-        Map<String,String> result = new HashMap<String, String>();
-        String sessionKey = (String)session.getAttribute(key3rd);
-        if(sessionKey == null){
-            result.put("error","sessionKey == null");
-            renderString(response,result);
+                            @RequestParam(required = true, defaultValue = "key3rd") String key3rd) {
+        logger.info("getUserInfo session id ={}", session.getId());
+        Map<String, String> result = new HashMap<String, String>();
+        String sessionKey = (String) session.getAttribute(key3rd);
+        if (sessionKey == null) {
+            result.put("error", "sessionKey == null");
+            renderString(response, result);
             logger.error("Failed to get sessionKey");
             return;
         }
         String openId = sessionKey.split("#")[1];
         bplUser.setOpenid(openId);
         bplUser.setCreateTime(new Date());
-        session.setAttribute("userInfo",bplUser);
-        result.put("sessionId",session.getId());
-        result.put("key3rd",key3rd);
+        session.setAttribute("userInfo", bplUser);
+        result.put("sessionId", session.getId());
+        result.put("key3rd", key3rd);
         logger.info("success to get result");
-        renderString(response,result);
+        renderString(response, result);
     }
 
     @RequestMapping(value = "/test")
     //@ResponseBody
-    public void  test(HttpServletResponse response){
-        Map<String,String> result = new HashMap<String, String>();
-        result.put("sessionId","success");
-        renderString(response,result);
+    public void test(HttpServletResponse response) {
+        Map<String, String> result = new HashMap<String, String>();
+        result.put("sessionId", "success");
+        renderString(response, result);
     }
 
 }
