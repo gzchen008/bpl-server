@@ -31,6 +31,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/wx")
 public class BplHotWxController {
+    public int pageSize = 10;
 
     @Autowired
     private BplHotWxDao hotWxDao;
@@ -48,7 +49,11 @@ public class BplHotWxController {
     public @ResponseBody ResponseVo list(Integer pageNo, HttpSession session) {
         Integer userId = getUserIdBySession(session);
         ResponseVo responseVo = new ResponseVo();
-        List<HotSummaryVo> hotSummaryList = hotWxDao.findAllHotSummary(userId, pageNo, 10);
+        if(pageNo == null || pageNo <= 0) {
+            pageNo = 1;
+        }
+        int offset = (pageNo -1) * pageSize;
+        List<HotSummaryVo> hotSummaryList = hotWxDao.findAllHotSummary(userId, offset, 10);
         if (CollectionUtils.isNotEmpty(hotSummaryList)) {
             responseVo.setData(hotSummaryList);
         } else {
