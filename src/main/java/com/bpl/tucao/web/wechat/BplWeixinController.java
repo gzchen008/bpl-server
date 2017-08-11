@@ -67,9 +67,12 @@ public class BplWeixinController extends BaseController {
     }
 
     @RequestMapping(value = "/user")
-    public void getUserInfo(@RequestParam(required = true, value = "userInfo") BplUser bplUser, HttpSession session,
-                            HttpServletResponse response,
-                            @RequestParam(required = true, defaultValue = "key3rd") String key3rd) {
+    public void getUserInfo(@RequestParam(required = true, defaultValue = "key3rd") String key3rd,
+                             String nickName,String avatarUrl,Integer gender,
+                            String country,String province,String city,
+                            HttpSession session,
+                            HttpServletResponse response
+                           ) {
         Map<String, String> result = new HashMap<String, String>();
         String openId = SessionUtils.getOpenId(session,key3rd);
         if (openId == null) {
@@ -78,6 +81,8 @@ public class BplWeixinController extends BaseController {
             logger.error("Failed to get sessionKey");
             return;
         }
+        BplUser bplUser = new BplUser(  nickName, avatarUrl, gender,
+                 country, province, city) ;
         bplUser.setOpenid(openId);
         bplUser.setCreateTime(new Date());
         logger.info("userInfo:" + bplUser);

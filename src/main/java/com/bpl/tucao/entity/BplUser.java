@@ -29,6 +29,16 @@ public class BplUser extends DataEntity<BplUser> {
 	public BplUser() {
 		super();
 	}
+	public BplUser( String nickName,String avatarUrl,Integer gender,
+					String country,String province,String city) {
+		super();
+		this.nickName = nickName;
+		this.avatarUrl = avatarUrl;
+		this.gender = gender;
+		this.country = country;
+		this.province = province;
+		this.city = city;
+	}
 
 	public BplUser(String id){
 		super(id);
