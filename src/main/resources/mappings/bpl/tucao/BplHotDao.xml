@@ -36,6 +36,9 @@
 		<include refid="bplHotJoins"/>
 		<where>
 			
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -65,14 +68,12 @@
 	
 	<insert id="insert">
 		INSERT INTO bpl_hot(
-			id,
 			tucao_count,
 			content,
 			status,
 			create_time,
 			update_time
 		) VALUES (
-			#{id},
 			#{tucaoCount},
 			#{content},
 			#{status},

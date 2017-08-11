@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bpl.tucao.dao.BplTucaoDao">
+    
+	<sql id="bplTucaoColumns">
+		a.id AS "id",
+		a.content AS "content",
+		a.userid AS "userid",
+		a.nick_name AS "nickName",
+		a.gender AS "gender",
+		a.hotid AS "hotid",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime",
+		a.flag AS "flag"
+	</sql>
+	
+	<sql id="bplTucaoJoins">
+	</sql>
+    
+	<select id="get" resultType="BplTucao">
+		SELECT 
+			<include refid="bplTucaoColumns"/>
+		FROM bpl_tucao a
+		<include refid="bplTucaoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="BplTucao">
+		SELECT 
+			<include refid="bplTucaoColumns"/>
+		FROM bpl_tucao a
+		<include refid="bplTucaoJoins"/>
+		<where>
+			
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>
+			<if test="userid != null and userid != ''">
+				AND a.userid = #{userid}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="BplTucao">
+		SELECT 
+			<include refid="bplTucaoColumns"/>
+		FROM bpl_tucao a
+		<include refid="bplTucaoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO bpl_tucao(
+			content,
+			userid,
+			nick_name,
+			gender,
+			hotid,
+			create_time,
+			update_time,
+			flag
+		) VALUES (
+			#{content},
+			#{userid},
+			#{nickName},
+			#{gender},
+			#{hotid},
+			#{createTime},
+			#{updateTime},
+			#{flag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE bpl_tucao SET 	
+			content = #{content},
+			userid = #{userid},
+			nick_name = #{nickName},
+			gender = #{gender},
+			hotid = #{hotid},
+			create_time = #{createTime},
+			update_time = #{updateTime},
+			flag = #{flag}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM bpl_tucao
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
