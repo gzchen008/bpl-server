@@ -16,8 +16,8 @@ public class SessionUtils {
 
     public static Map<String,Object> session = new ConcurrentHashMap();
 
-    public static String getOpenId(HttpSession httpSession, String sessionId) {
-        String sessionValue = (String) httpSession.getAttribute(sessionId);
+    public static String getOpenId(HttpSession httpSession, String key3rd) {
+        String sessionValue = (String) httpSession.getAttribute(key3rd);
         if (!StringUtils.isEmpty(sessionValue)) {
             String openId = sessionValue.split("#")[1];
             return openId;

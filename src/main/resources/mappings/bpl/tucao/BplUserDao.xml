@@ -24,6 +24,14 @@
 		<include refid="bplUserJoins"/>
 		WHERE a.id = #{id}
 	</select>
+
+	<select id="findByOppenid" resultType="BplUser">
+		SELECT
+		<include refid="bplUserColumns"/>
+		FROM bpl_user a
+		<include refid="bplUserJoins"/>
+		WHERE a.openid = #{openid}
+	</select>
 	
 	<select id="findList" resultType="BplUser">
 		SELECT 

@@ -2,6 +2,7 @@ package com.bpl.tucao.web.wechat;
 
 import com.bpl.tucao.entity.BplUser;
 import com.bpl.tucao.service.BplUserService;
+import com.bpl.tucao.utils.SessionUtils;
 import com.bpl.tucao.utils.WeixinUtil;
 import com.thinkgem.jeesite.common.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,7 @@ public class BplWeixinController extends BaseController {
     public void login(@RequestParam(required = true, value = "code") String wxCode, HttpSession session,
                       HttpServletResponse response) {
         logger.info("login session id ={}", session.getId());
-
-        logger.error("login code:" + wxCode);
+        logger.info("login code:" + wxCode);
         String sessionKey = null;
         Map<String, String> result = new HashMap<String, String>();
         try {
@@ -53,10 +53,7 @@ public class BplWeixinController extends BaseController {
             StringBuffer sb = new StringBuffer();
             sb.append(wxSessionKey).append("#").append(wxOpenId);
             sessionKey = sb.toString();
-
-            System.out.println("session_key:" + sessionKey);
             String key3rd = UUID.randomUUID().toString();
-
             session.setAttribute(key3rd, sessionKey);
             result.put("sessionId", session.getId());
             result.put(KEY_3_RD, key3rd);
@@ -75,17 +72,16 @@ public class BplWeixinController extends BaseController {
                             @RequestParam(required = true, defaultValue = "key3rd") String key3rd) {
         logger.info("getUserInfo session id ={}", session.getId());
         Map<String, String> result = new HashMap<String, String>();
-        String sessionKey = (String) session.getAttribute(key3rd);
-        if (sessionKey == null) {
+        String openId = SessionUtils.getOpenId(session,key3rd);
+        if (openId == null) {
             result.put("error", "sessionKey == null");
             renderString(response, result);
             logger.error("Failed to get sessionKey");
             return;
         }
-        String openId = sessionKey.split("#")[1];
         bplUser.setOpenid(openId);
         bplUser.setCreateTime(new Date());
-        session.setAttribute("userInfo", bplUser);
+        session.setAttribute("userInfo", bplUserService.saveOrget(bplUser));
         result.put("sessionId", session.getId());
         result.put("key3rd", key3rd);
         logger.info("success to get result");

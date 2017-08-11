@@ -5,6 +5,7 @@ package com.bpl.tucao.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,11 +22,22 @@ import com.bpl.tucao.dao.BplUserDao;
 @Service
 @Transactional(readOnly = true)
 public class BplUserService extends CrudService<BplUserDao, BplUser> {
+	@Autowired
+	protected BplUserDao bplUserDao;
 
 	public BplUser get(String id) {
 		return super.get(id);
 	}
-	
+
+	public BplUser saveOrget(BplUser bplUser) {
+		BplUser userInfo = bplUserDao.findByOppenid(bplUser.getOpenid());
+		if (userInfo == null){
+			int id = bplUserDao.insert(bplUser);
+			userInfo = bplUserDao.get(""+id);
+		}
+		return userInfo;
+	}
+
 	public List<BplUser> findList(BplUser bplUser) {
 		return super.findList(bplUser);
 	}

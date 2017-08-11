@@ -14,5 +14,5 @@ import com.bpl.tucao.entity.BplUser;
  */
 @MyBatisDao
 public interface BplUserDao extends CrudDao<BplUser> {
-	
+    BplUser findByOppenid(String openid);
 }
