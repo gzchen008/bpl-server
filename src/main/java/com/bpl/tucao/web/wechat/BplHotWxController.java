@@ -8,6 +8,7 @@ import com.bpl.tucao.dto.HotCommentDto;
 import com.bpl.tucao.dto.HotLikeDto;
 import com.bpl.tucao.entity.BplComment;
 import com.bpl.tucao.entity.BplLike;
+import com.bpl.tucao.entity.BplUser;
 import com.bpl.tucao.vo.HotFeedBackVo;
 import com.bpl.tucao.vo.HotSummaryVo;
 import com.bpl.tucao.vo.ResponseVo;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -41,7 +43,8 @@ public class BplHotWxController {
     private BplHotLikeWxDao hotLikeWxDao;
 
     @RequestMapping(value = "/hotSummaries/{id}", method = RequestMethod.GET)
-    public @ResponseBody ResponseVo list(@PathVariable("id") Integer userId) {
+    public @ResponseBody ResponseVo list(@PathVariable("id") Integer userId, HttpSession session) {
+        userId = getUserIdBySession(session);
         ResponseVo responseVo = new ResponseVo();
         List<HotSummaryVo> hotSummaryList = hotWxDao.findAllHotSummary(userId);
         if (CollectionUtils.isNotEmpty(hotSummaryList)) {
@@ -50,6 +53,12 @@ public class BplHotWxController {
             responseVo.result(ResponseVo.FAIL);
         }
         return responseVo;
+    }
+
+    private Integer getUserIdBySession(HttpSession session) {
+        BplUser bplUser = (BplUser) session.getAttribute("userInfo");
+        Integer userId = Integer.parseInt(bplUser.getId());
+        return userId;
     }
 
     @RequestMapping(value = "/hotDetail/{id}", method = RequestMethod.GET)
@@ -65,7 +74,8 @@ public class BplHotWxController {
     }
 
     @RequestMapping(value = "/hotComment", method = RequestMethod.POST)
-    public @ResponseBody ResponseVo comment(@RequestBody HotCommentDto dto) {
+    public @ResponseBody ResponseVo comment(@RequestBody HotCommentDto dto, HttpSession session) {
+        dto.setUserId(getUserIdBySession(session));
         ResponseVo responseVo = new ResponseVo();
         int result = hotCommentWxDao.insert(new BplComment(dto));
         if (result != 1) {
@@ -75,7 +85,8 @@ public class BplHotWxController {
     }
 
     @RequestMapping(value = "/hotLike", method = RequestMethod.POST)
-    public @ResponseBody ResponseVo likeUp(@RequestBody HotLikeDto dto) {
+    public @ResponseBody ResponseVo likeUp(@RequestBody HotLikeDto dto, HttpSession session) {
+        dto.setUserId(getUserIdBySession(session));
         ResponseVo responseVo = new ResponseVo();
         int result = hotLikeWxDao.insert(new BplLike(dto));
         if (result != 1) {
