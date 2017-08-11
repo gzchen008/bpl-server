@@ -45,10 +45,10 @@ public class BplHotWxController {
     private BplHotWxService hotWxService;
 
     @RequestMapping(value = "/hotSummaries", method = RequestMethod.GET)
-    public @ResponseBody ResponseVo list(HttpSession session) {
+    public @ResponseBody ResponseVo list(Integer pageNo, HttpSession session) {
         Integer userId = getUserIdBySession(session);
         ResponseVo responseVo = new ResponseVo();
-        List<HotSummaryVo> hotSummaryList = hotWxDao.findAllHotSummary(userId, 0, 10);
+        List<HotSummaryVo> hotSummaryList = hotWxDao.findAllHotSummary(userId, pageNo, 10);
         if (CollectionUtils.isNotEmpty(hotSummaryList)) {
             responseVo.setData(hotSummaryList);
         } else {
