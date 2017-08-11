@@ -2,18 +2,13 @@ package com.bpl.tucao.web.wechat;
 
 import com.bpl.tucao.entity.BplUser;
 import com.bpl.tucao.service.BplUserService;
-import com.bpl.tucao.utils.SessionUtils;
 import com.bpl.tucao.utils.WeixinUtil;
 import com.thinkgem.jeesite.common.web.BaseController;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -21,6 +16,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import static com.bpl.tucao.utils.SessionUtils.KEY_3_RD;
 
 /**
  * Created by johnnwang on 2017/8/10.
@@ -62,7 +59,7 @@ public class BplWeixinController extends BaseController {
 
             session.setAttribute(key3rd, sessionKey);
             result.put("sessionId", session.getId());
-            result.put("key3rd", key3rd);
+            result.put(KEY_3_RD, key3rd);
             renderString(response, result);
         } catch (IOException e) {
             logger.error("failed to get wxSession", e);
