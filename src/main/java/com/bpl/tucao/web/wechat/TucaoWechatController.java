@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
@@ -24,11 +26,12 @@ public class TucaoWechatController extends BaseController {
     private BplTucaoService bplTucaoService;
 
     @RequestMapping("/add")
-    public void add(@RequestBody BplTucao bplTucao) {
+    public void add(BplTucao bplTucao, @RequestParam(required = true, defaultValue = "sessionId") String sessionId, HttpSession httpSession) {
         Date time = new Date();
         bplTucao.setCreateTime(time);
         bplTucao.setUpdateTime(time);
         bplTucao.setFlag("0");
+
         bplTucaoService.save(bplTucao);
     }
 
