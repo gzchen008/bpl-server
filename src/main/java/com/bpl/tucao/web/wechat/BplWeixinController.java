@@ -84,7 +84,9 @@ public class BplWeixinController extends BaseController {
         BplUser bplUser = new BplUser(  nickName, avatarUrl, gender,
                  country, province, city) ;
         bplUser.setOpenid(openId);
-        bplUser.setCreateTime(new Date());
+        Date time = new Date();
+        bplUser.setCreateTime(time);
+        bplUser.setUpdateDate(time);
         logger.info("userInfo:" + bplUser);
         session.setAttribute("userInfo", bplUserService.saveOrget(bplUser));
         result.put("sessionId", session.getId());
