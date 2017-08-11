@@ -1,5 +1,6 @@
 package com.bpl.tucao.interceptor;
 
+import com.bpl.tucao.entity.BplUser;
 import com.bpl.tucao.utils.SessionUtils;
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.mapper.JsonMapper;
@@ -24,7 +25,7 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         Object userInfo = request.getSession().getAttribute("userInfo");
-        if (userInfo == null ) {
+        if (userInfo == null || null == ((BplUser) userInfo).getId()) {
             Map<String, Object> result = Maps.newHashMap();
             result.put("code", -1);
             result.put("msg", "please login");

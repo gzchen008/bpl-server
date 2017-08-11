@@ -44,9 +44,9 @@ public class BplHotWxController {
     @Autowired
     private BplHotWxService hotWxService;
 
-    @RequestMapping(value = "/hotSummaries/{id}", method = RequestMethod.GET)
-    public @ResponseBody ResponseVo list(@PathVariable("id") Integer userId, HttpSession session) {
-        userId = getUserIdBySession(session);
+    @RequestMapping(value = "/hotSummaries", method = RequestMethod.GET)
+    public @ResponseBody ResponseVo list(HttpSession session) {
+        Integer userId = getUserIdBySession(session);
         ResponseVo responseVo = new ResponseVo();
         List<HotSummaryVo> hotSummaryList = hotWxDao.findAllHotSummary(userId);
         if (CollectionUtils.isNotEmpty(hotSummaryList)) {
