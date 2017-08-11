@@ -2,6 +2,7 @@ package com.bpl.tucao.dao;
 
 import com.bpl.tucao.vo.HotSummaryVo;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,6 +14,6 @@ import java.util.List;
 
 @MyBatisDao
 public interface BplHotWxDao {
-    List<HotSummaryVo> findAllHotSummary(Integer userId);
-    int updateLikeCount(Integer hotId);
+    List<HotSummaryVo> findAllHotSummary(@Param("userId") Integer userId, @Param("offset") Integer offset, @Param("pageSize") Integer pageSize);
+    int updateLikeCount(@Param("hotId") Integer hotId);
 }

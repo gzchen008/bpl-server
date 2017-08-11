@@ -48,7 +48,7 @@ public class BplHotWxController {
     public @ResponseBody ResponseVo list(HttpSession session) {
         Integer userId = getUserIdBySession(session);
         ResponseVo responseVo = new ResponseVo();
-        List<HotSummaryVo> hotSummaryList = hotWxDao.findAllHotSummary(userId);
+        List<HotSummaryVo> hotSummaryList = hotWxDao.findAllHotSummary(userId, 0, 10);
         if (CollectionUtils.isNotEmpty(hotSummaryList)) {
             responseVo.setData(hotSummaryList);
         } else {
