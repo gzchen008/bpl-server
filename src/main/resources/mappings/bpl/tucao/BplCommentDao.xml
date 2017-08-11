@@ -29,7 +29,9 @@
 		FROM bpl_comment a
 		<include refid="bplCommentJoins"/>
 		<where>
-			
+			<if test="hotid != null and hotid != ''">
+				AND a.hotid = #{hotid}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

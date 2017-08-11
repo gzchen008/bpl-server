@@ -71,7 +71,9 @@
 				<td>
 					${fns:getDictLabel(bplHot.status, 'hot_status', '')}
 				</td>
-				<td></td>
+				<td>
+					${bplHot.sqlMap.comments}
+				</td>
 				<td></td>
 				<td>
 					<fmt:formatDate value="${bplHot.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
