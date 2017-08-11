@@ -14,4 +14,5 @@ import java.util.List;
 @MyBatisDao
 public interface BplHotWxDao {
     List<HotSummaryVo> findAllHotSummary(Integer userId);
+    int updateLikeCount(Integer hotId);
 }

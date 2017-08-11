@@ -9,6 +9,8 @@ import com.bpl.tucao.dto.HotLikeDto;
 import com.bpl.tucao.entity.BplComment;
 import com.bpl.tucao.entity.BplLike;
 import com.bpl.tucao.entity.BplUser;
+import com.bpl.tucao.service.BplHotWxService;
+import com.bpl.tucao.service.BplLikeService;
 import com.bpl.tucao.vo.HotFeedBackVo;
 import com.bpl.tucao.vo.HotSummaryVo;
 import com.bpl.tucao.vo.ResponseVo;
@@ -40,7 +42,7 @@ public class BplHotWxController {
     private BplHotCommentWxDao hotCommentWxDao;
 
     @Autowired
-    private BplHotLikeWxDao hotLikeWxDao;
+    private BplHotWxService hotWxService;
 
     @RequestMapping(value = "/hotSummaries/{id}", method = RequestMethod.GET)
     public @ResponseBody ResponseVo list(@PathVariable("id") Integer userId, HttpSession session) {
@@ -88,7 +90,7 @@ public class BplHotWxController {
     public @ResponseBody ResponseVo likeUp(@RequestBody HotLikeDto dto, HttpSession session) {
         dto.setUserId(getUserIdBySession(session));
         ResponseVo responseVo = new ResponseVo();
-        int result = hotLikeWxDao.insert(new BplLike(dto));
+        int result = hotWxService.likeHot(new BplLike(dto));
         if (result != 1) {
             responseVo.result(ResponseVo.FAIL);
         }

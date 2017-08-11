@@ -6,6 +6,7 @@ import com.bpl.tucao.dao.BplHotWxDao;
 import com.bpl.tucao.entity.BplComment;
 import com.bpl.tucao.entity.BplHot;
 import com.bpl.tucao.entity.BplLike;
+import com.bpl.tucao.service.BplHotWxService;
 import com.bpl.tucao.vo.HotSummaryVo;
 import org.junit.*;
 import org.junit.Test;
@@ -31,6 +32,9 @@ public class DaoTest extends BaseTest {
     @Resource
     private BplHotLikeWxDao hotLikeWxDao;
 
+    @Autowired
+    private BplHotWxService hotWxService;
+
     @Test
     public void test() {
 //        List<HotSummaryVo> hotSummaryVoList = hotWxDao.findAllHotSummary(1);
@@ -44,7 +48,7 @@ public class DaoTest extends BaseTest {
         like.setHotid(1);
         like.setUserid(1);
         like.setNickName("1");
-        hotLikeWxDao.insert(like);
+        hotWxService.likeHot(like);
         System.out.println("");
     }
 }

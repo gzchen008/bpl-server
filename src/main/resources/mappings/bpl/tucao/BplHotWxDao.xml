@@ -20,4 +20,11 @@
         FROM bpl_hot a LEFT JOIN (SELECT * FROM bpl_like WHERE userId = #{userId}) b
         ON a.id = b.hotId;
     </select>
+
+    <update id="updateLikeCount">
+        UPDATE bpl_hot SET
+        tucao_count = tucao_count + 1,
+        update_time = NOW()
+        WHERE id = #{hotId}
+    </update>
 </mapper>
