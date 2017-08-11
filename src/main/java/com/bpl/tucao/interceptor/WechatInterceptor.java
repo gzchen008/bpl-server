@@ -23,8 +23,8 @@ public class WechatInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        String key = (String) request.getSession().getAttribute(SessionUtils.KEY_3_RD);
-        if (StringUtils.isEmpty(key)) {
+        Object userInfo = request.getSession().getAttribute("userInfo");
+        if (userInfo == null ) {
             Map<String, Object> result = Maps.newHashMap();
             result.put("code", -1);
             result.put("msg", "please login");

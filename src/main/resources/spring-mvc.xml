@@ -101,6 +101,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/wx/**"/>
             <mvc:exclude-mapping path="/wx/login"/>
+			<mvc:exclude-mapping path="/wx/user"/>
 			<bean class="com.bpl.tucao.interceptor.WechatInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
