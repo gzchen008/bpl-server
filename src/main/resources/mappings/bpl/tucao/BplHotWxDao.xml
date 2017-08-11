@@ -15,7 +15,7 @@
     </sql>
 
     <select id="findAllHotSummary" resultType="com.bpl.tucao.vo.HotSummaryVo">
-        SELECT a.id AS "id", a.tucao_count AS "hotCount", a.content AS "content",
+        SELECT DISTINCT a.id AS "id", a.tucao_count AS "hotCount", a.content AS "content",
         a.status AS "status", IF(b.id IS NULL , 0, 1) AS "likeFlag"
         FROM bpl_hot a LEFT JOIN (SELECT * FROM bpl_like WHERE userId = #{userId}) b
         ON a.id = b.hotId LIMIT #{offset}, #{pageSize};
