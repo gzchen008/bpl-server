@@ -14,5 +14,5 @@ import com.bpl.tucao.entity.BplHot;
  */
 @MyBatisDao
 public interface BplHotDao extends CrudDao<BplHot> {
-	
+
 }

@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bpl.tucao.dao.BplFeedBackWxDao">
+<mapper namespace="com.bpl.tucao.dao.BplFeedbackDao">
     
 	<sql id="bplFeedbackColumns">
 		a.id AS "id",
+		a.hotid AS "hotid",
 		a.status AS "status",
 		a.content AS "content",
+		a.create_time AS "createTime",
 		a.update_time AS "updateTime"
 	</sql>
 	
 	<sql id="bplFeedbackJoins">
 	</sql>
     
-	<select id="findOne" resultType="com.bpl.tucao.vo.HotFeedBackVo">
+	<select id="get" resultType="BplFeedback">
 		SELECT 
 			<include refid="bplFeedbackColumns"/>
 		FROM bpl_feedback a
-		WHERE a.id = #{hotId}
+		<include refid="bplFeedbackJoins"/>
+		WHERE a.id = #{id}
 	</select>
 	
 	<select id="findList" resultType="BplFeedback">

@@ -3,6 +3,7 @@
  */
 package com.bpl.tucao.entity;
 
+import com.bpl.tucao.dto.HotCommentDto;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -18,7 +19,7 @@ public class BplComment extends DataEntity<BplComment> {
 	
 	private static final long serialVersionUID = 1L;
 	private Integer hotid;		// hotid
-	private String userid;		// userid
+	private Integer userid;		// userid
 	private String nickName;		// nick_name
 	private String content;		// content
 	private Date createTime;		// create_time
@@ -26,6 +27,13 @@ public class BplComment extends DataEntity<BplComment> {
 	
 	public BplComment() {
 		super();
+	}
+
+	public BplComment(HotCommentDto hotCommentDto) {
+		this.hotid = hotCommentDto.getHotId();
+		this.userid = hotCommentDto.getUserId();
+		this.nickName = hotCommentDto.getNickName();
+		this.content = hotCommentDto.getContent();
 	}
 
 	public BplComment(String id){
@@ -40,16 +48,14 @@ public class BplComment extends DataEntity<BplComment> {
 		this.hotid = hotid;
 	}
 	
-	@Length(min=0, max=255, message="userid长度必须介于 0 和 255 之间")
-	public String getUserid() {
+	public Integer getUserid() {
 		return userid;
 	}
 
-	public void setUserid(String userid) {
+	public void setUserid(Integer userid) {
 		this.userid = userid;
 	}
 	
-	@Length(min=0, max=127, message="nick_name长度必须介于 0 和 127 之间")
 	public String getNickName() {
 		return nickName;
 	}

@@ -79,5 +79,4 @@ public class BplHotController extends BaseController {
 		addMessage(redirectAttributes, "删除吐槽热点模块成功");
 		return "redirect:"+Global.getAdminPath()+"/tucao/bplHot/?repage";
 	}
-
 }

@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bpl.tucao.dao.BplFeedBackWxDao">
+<mapper namespace="com.bpl.tucao.dao.BplHotCommentWxDao">
     
-	<sql id="bplFeedbackColumns">
+	<sql id="bplCommentColumns">
 		a.id AS "id",
-		a.status AS "status",
+		a.hotid AS "hotid",
+		a.userid AS "userid",
+		a.nick_name AS "nickName",
 		a.content AS "content",
+		a.create_time AS "createTime",
 		a.update_time AS "updateTime"
 	</sql>
 	
-	<sql id="bplFeedbackJoins">
+	<sql id="bplCommentJoins">
 	</sql>
     
-	<select id="findOne" resultType="com.bpl.tucao.vo.HotFeedBackVo">
+	<select id="get" resultType="BplComment">
 		SELECT 
-			<include refid="bplFeedbackColumns"/>
-		FROM bpl_feedback a
-		WHERE a.id = #{hotId}
+			<include refid="bplCommentColumns"/>
+		FROM bpl_comment a
+		<include refid="bplCommentJoins"/>
+		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="BplFeedback">
+	<select id="findList" resultType="BplComment">
 		SELECT 
-			<include refid="bplFeedbackColumns"/>
-		FROM bpl_feedback a
-		<include refid="bplFeedbackJoins"/>
+			<include refid="bplCommentColumns"/>
+		FROM bpl_comment a
+		<include refid="bplCommentJoins"/>
 		<where>
 			
 		</where>
@@ -36,11 +40,11 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="BplFeedback">
+	<select id="findAllList" resultType="BplComment">
 		SELECT 
-			<include refid="bplFeedbackColumns"/>
-		FROM bpl_feedback a
-		<include refid="bplFeedbackJoins"/>
+			<include refid="bplCommentColumns"/>
+		FROM bpl_comment a
+		<include refid="bplCommentJoins"/>
 		<where>
 			
 		</where>		
@@ -53,36 +57,33 @@
 		</choose>
 	</select>
 	
-	<insert id="insert">
-		INSERT INTO bpl_feedback(
-			id,
+	<insert id="insert" parameterType="com.bpl.tucao.entity.BplComment">
+		INSERT INTO bpl_comment(
 			hotid,
-			status,
+			userid,
+			nick_name,
 			content,
 			create_time,
 			update_time
 		) VALUES (
-			#{id},
 			#{hotid},
-			#{status},
+			#{userid},
+			#{nickName},
 			#{content},
-			#{createTime},
-			#{updateTime}
+			NOW(),
+			NOW()
 		)
 	</insert>
 	
 	<update id="update">
-		UPDATE bpl_feedback SET 	
-			hotid = #{hotid},
-			status = #{status},
+		UPDATE bpl_comment SET
 			content = #{content},
-			create_time = #{createTime},
-			update_time = #{updateTime}
+			update_time = NOW()
 		WHERE id = #{id}
 	</update>
 	
 	<update id="delete">
-		DELETE FROM bpl_feedback
+		DELETE FROM bpl_comment
 		WHERE id = #{id}
 	</update>
 	

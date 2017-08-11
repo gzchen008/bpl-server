@@ -3,6 +3,7 @@
  */
 package com.bpl.tucao.entity;
 
+import com.bpl.tucao.dto.HotLikeDto;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -18,13 +19,19 @@ public class BplLike extends DataEntity<BplLike> {
 	
 	private static final long serialVersionUID = 1L;
 	private Integer hotid;		// hotid
-	private String userid;		// userid
+	private Integer userid;		// userid
 	private String nickName;		// nick_name
 	private Date createTime;		// create_time
 	private Date updateTime;		// update_time
 	
 	public BplLike() {
 		super();
+	}
+
+	public BplLike(HotLikeDto hotLike) {
+		this.hotid = hotLike.getHotId();
+		this.userid = hotLike.getUserId();
+		this.nickName = hotLike.getNickName();
 	}
 
 	public BplLike(String id){
@@ -39,16 +46,14 @@ public class BplLike extends DataEntity<BplLike> {
 		this.hotid = hotid;
 	}
 	
-	@Length(min=0, max=255, message="userid长度必须介于 0 和 255 之间")
-	public String getUserid() {
+	public Integer getUserid() {
 		return userid;
 	}
 
-	public void setUserid(String userid) {
+	public void setUserid(Integer userid) {
 		this.userid = userid;
 	}
-	
-	@Length(min=0, max=127, message="nick_name长度必须介于 0 和 127 之间")
+
 	public String getNickName() {
 		return nickName;
 	}
