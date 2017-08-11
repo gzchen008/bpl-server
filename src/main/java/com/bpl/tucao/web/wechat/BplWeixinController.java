@@ -1,4 +1,4 @@
-package com.bpl.tucao.web;
+package com.bpl.tucao.web.wechat;
 
 import com.bpl.tucao.entity.BplUser;
 import com.bpl.tucao.utils.WeixinUtil;
@@ -22,12 +22,12 @@ import java.util.UUID;
  * Created by johnnwang on 2017/8/10.
  */
 @Controller
-@RequestMapping(value = "/weixin")
+@RequestMapping(value = "/wx")
 public class BplWeixinController extends BaseController {
 
     @RequestMapping(value = "/login")
     public void login(@RequestParam(required = true,value = "code") String wxCode, HttpSession session, HttpServletResponse response) {
-        logger.info("login");
+        logger.info("login code:"+wxCode);
         String sessionKey = null;
         Map<String,String> result = new HashMap<String, String>();
         try {
