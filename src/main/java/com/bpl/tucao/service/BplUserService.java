@@ -34,7 +34,6 @@ public class BplUserService extends CrudService<BplUserDao, BplUser> {
 		BplUser userInfo = bplUserDao.findByOppenid(bplUser.getOpenid());
 		if (userInfo == null){
 			int id = bplUserDao.insert(bplUser);
-			System.out.println("bpluser:"+ bplUser);
 			userInfo = bplUserDao.get(""+id);
 		}
 		return userInfo;

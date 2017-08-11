@@ -1,8 +1,10 @@
 package com.bpl.tucao.web.wechat;
 
+import com.bpl.tucao.entity.BplComment;
 import com.bpl.tucao.entity.BplHot;
 import com.bpl.tucao.entity.BplTucao;
 import com.bpl.tucao.entity.BplUser;
+import com.bpl.tucao.service.BplCommentService;
 import com.bpl.tucao.service.BplHotService;
 import com.bpl.tucao.service.BplTucaoService;
 import com.bpl.tucao.service.BplUserService;
@@ -36,6 +38,17 @@ public class TucaoWechatController extends BaseController {
 
     @Autowired
     private BplHotService bplHotService;
+
+    @Autowired
+    private BplCommentService bplCommentService;
+
+    @RequestMapping("/listComment")
+    public void listComment(Integer hotId, HttpServletResponse response) {
+        BplComment bplComment = new BplComment();
+        bplComment.setHotid(hotId);
+        List<BplComment> comments = bplCommentService.findList(bplComment);
+        renderString(response, comments);
+    }
 
     @RequestMapping("/listHot")
     public void listHot(Integer pageNo, HttpServletResponse response) {
