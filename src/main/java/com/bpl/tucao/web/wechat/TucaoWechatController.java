@@ -1,7 +1,9 @@
 package com.bpl.tucao.web.wechat;
 
+import com.bpl.tucao.entity.BplHot;
 import com.bpl.tucao.entity.BplTucao;
 import com.bpl.tucao.entity.BplUser;
+import com.bpl.tucao.service.BplHotService;
 import com.bpl.tucao.service.BplTucaoService;
 import com.bpl.tucao.service.BplUserService;
 import com.bpl.tucao.utils.SessionUtils;
@@ -32,24 +34,36 @@ public class TucaoWechatController extends BaseController {
     @Autowired
     private BplUserService bplUserService;
 
+    @Autowired
+    private BplHotService bplHotService;
+
+    @RequestMapping("/listHot")
+    public void listHot(Integer pageNo, HttpServletResponse response) {
+        Page<BplHot> page = new Page<BplHot>();
+        Page<BplHot> resPage = bplHotService.findPage(page, new BplHot());
+        renderString(response, resPage.getList());
+    }
+
     @RequestMapping("/add")
-    public void add(String sessionId, String content, HttpServletResponse response, HttpSession httpSession) {
+    public void add(String content, HttpServletResponse response, HttpSession httpSession) {
+        Map<String, Object> result = Maps.newHashMap();
         // get user
-        String openId = SessionUtils.getOpenId(httpSession, sessionId);
-        BplUser user = getUserByOpenId(openId);
+        BplUser user = (BplUser) httpSession.getAttribute(SessionUtils.USER_INFO);
+        if (user == null) {
+            return;
+        }
 
         BplTucao bplTucao = new BplTucao();
-        Map<String, Object> result = Maps.newHashMap();
         Date time = new Date();
         bplTucao.setContent(content);
         bplTucao.setCreateTime(time);
         bplTucao.setUpdateTime(time);
         bplTucao.setFlag("0");
-
         bplTucao.setNickName(user.getNickName());
         bplTucao.setGender(user.getGender());
 
         bplTucaoService.save(bplTucao);
+        result.put("code", 0);
         result.put("msg", "success");
         renderString(response, result);
     }

@@ -14,6 +14,8 @@ public class SessionUtils {
 
     public static final String KEY_3_RD = "key3rd";
 
+    public static final String USER_INFO = "userInfo";
+
     public static Map<String,Object> session = new ConcurrentHashMap();
 
     public static String getOpenId(HttpSession httpSession, String key3rd) {
