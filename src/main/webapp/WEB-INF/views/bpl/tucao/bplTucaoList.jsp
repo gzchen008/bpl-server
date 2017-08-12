@@ -40,7 +40,6 @@
 		<thead>
 			<tr>
 				<th>内容</th>
-				<th>用户ID</th>
 				<th>昵称</th>
 				<th>性别</th>
 				<th>热点ID</th>
@@ -55,9 +54,6 @@
 				<td><a href="${ctx}/tucao/bplTucao/form?id=${bplTucao.id}">
 					${bplTucao.content}
 				</a></td>
-				<td>
-					${bplTucao.userid}
-				</td>
 				<td>
 					${bplTucao.nickName}
 				</td>
