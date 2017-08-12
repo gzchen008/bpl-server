@@ -13,7 +13,28 @@
 	
 	<sql id="bplHotJoins">
 	</sql>
-    
+	<select id="generateWeekly" resultType="BplHot">
+		SELECT
+		<include refid="bplHotColumns"/>
+		FROM bpl_hot a
+		<include refid="bplHotJoins"/>
+		WHERE date_sub(curdate(), INTERVAL 7 DAY) &lt;= date(`create_time`) order by tucao_count desc limit 5
+	</select>
+	<select id="generateHistory" resultType="BplHot">
+		SELECT
+		<include refid="bplHotColumns"/>
+		FROM bpl_hot a
+		<include refid="bplHotJoins"/>
+		WHERE status &lt; 3 order by tucao_count desc limit 5
+	</select>
+	<select id="generateWeeklyDone" resultType="BplHot">
+		SELECT
+		<include refid="bplHotColumns"/>
+		FROM bpl_hot a
+		<include refid="bplHotJoins"/>
+		WHERE status=3 and date_sub(curdate(), INTERVAL 7 DAY) &lt;= date(`create_time`) order by tucao_count desc limit 5
+	</select>
+
 	<select id="get" resultType="BplHot">
 		SELECT 
 			<include refid="bplHotColumns"/>

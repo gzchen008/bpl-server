@@ -5,6 +5,7 @@ package com.bpl.tucao.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +22,8 @@ import com.bpl.tucao.dao.BplHotDao;
 @Service
 @Transactional(readOnly = true)
 public class BplHotService extends CrudService<BplHotDao, BplHot> {
-
+    @Autowired
+	private BplHotDao bplHotDao;
 	public BplHot get(String id) {
 		return super.get(id);
 	}
@@ -43,5 +45,8 @@ public class BplHotService extends CrudService<BplHotDao, BplHot> {
 	public void delete(BplHot bplHot) {
 		super.delete(bplHot);
 	}
-	
+
+	public List<BplHot> generateWeekly(){ return  bplHotDao.generateWeekly(); }
+	public List<BplHot> generateHistory(){ return  bplHotDao.generateHistory(); }
+	public List<BplHot> generateWeeklyDone(){ return  bplHotDao.generateWeeklyDone(); }
 }
