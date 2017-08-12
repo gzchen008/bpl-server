@@ -84,13 +84,12 @@ public class BplHotController extends BaseController {
             }
             for (BplFeedback feedback : feedbackList) {
                 if (feedback.getHotid().toString().equals(hot.getId())) {
-                    String newFeedback = hot.getSqlMap().get("feedbacks") + "," + feedback.getContent();
+                    String newFeedback = hot.getSqlMap().get("feedbacks") == null ? "" : hot.getSqlMap().get("feedbacks") + "," + feedback.getContent();
                     hot.getSqlMap().put("feedbacks", newFeedback);
                 }
             }
             logger.debug("hot:{}", hot);
         }
-
 
 
         model.addAttribute("page", page);
@@ -111,7 +110,7 @@ public class BplHotController extends BaseController {
             return form(bplHot, model);
         }
         bplHotService.save(bplHot);
-        if(bplHot.getRemarks() != null){
+        if (bplHot.getRemarks() != null) {
             Date time = new Date();
             BplFeedback feedback = new BplFeedback();
             feedback.setHotid(Integer.valueOf(bplHot.getId()));
