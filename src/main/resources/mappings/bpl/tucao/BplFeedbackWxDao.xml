@@ -58,14 +58,12 @@
 	
 	<insert id="insert">
 		INSERT INTO bpl_feedback(
-			id,
 			hotid,
 			status,
 			content,
 			create_time,
 			update_time
 		) VALUES (
-			#{id},
 			#{hotid},
 			#{status},
 			#{content},

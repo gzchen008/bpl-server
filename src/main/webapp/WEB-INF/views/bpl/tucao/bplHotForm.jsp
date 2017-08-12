@@ -55,6 +55,12 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">反馈内容：</label>
+			<div class="controls">
+				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">创建时间：</label>
 			<div class="controls">
 				<input name="createTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "

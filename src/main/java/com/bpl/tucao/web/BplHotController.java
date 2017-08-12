@@ -26,6 +26,7 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.bpl.tucao.entity.BplHot;
 import com.bpl.tucao.service.BplHotService;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,6 +111,15 @@ public class BplHotController extends BaseController {
             return form(bplHot, model);
         }
         bplHotService.save(bplHot);
+        if(bplHot.getRemarks() != null){
+            Date time = new Date();
+            BplFeedback feedback = new BplFeedback();
+            feedback.setHotid(Integer.valueOf(bplHot.getId()));
+            feedback.setContent(bplHot.getRemarks());
+            feedback.setCreateTime(time);
+            feedback.setUpdateTime(time);
+            bplFeedbackService.save(feedback);
+        }
         addMessage(redirectAttributes, "保存吐槽热点成功");
         return "redirect:" + Global.getAdminPath() + "/tucao/bplHot/?repage";
     }
