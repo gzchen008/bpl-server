@@ -25,7 +25,12 @@
 		FROM bpl_feedback a
 		<include refid="bplFeedbackJoins"/>
 		<where>
-			
+			<if test="status != null">
+				AND a.status = #{status}
+			</if>
+			<if test="hotId != null">
+				AND a.hotId = #{hotId}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
