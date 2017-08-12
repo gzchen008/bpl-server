@@ -116,6 +116,7 @@ public class BplHotController extends BaseController {
             BplFeedback feedback = new BplFeedback();
             feedback.setHotid(Integer.valueOf(bplHot.getId()));
             feedback.setContent(bplHot.getRemarks());
+            feedback.setStatus(bplHot.getStatus());
             feedback.setCreateTime(time);
             feedback.setUpdateTime(time);
             bplFeedbackService.save(feedback);
