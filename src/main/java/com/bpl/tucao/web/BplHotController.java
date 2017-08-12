@@ -78,13 +78,23 @@ public class BplHotController extends BaseController {
             hot.setSqlMap(objMap);
             for (BplComment comment : commentList) {
                 if (comment.getHotid().toString().equals(hot.getId())) {
-                    String newComment = hot.getSqlMap().get("comments") + "," + comment.getContent();
+                    String newComment = null;
+                    if (hot.getSqlMap().get("comments") != null) {
+                        newComment = hot.getSqlMap().get("comments") + "," + comment.getContent();
+                    } else {
+                        newComment = comment.getContent();
+                    }
                     hot.getSqlMap().put("comments", newComment);
                 }
             }
             for (BplFeedback feedback : feedbackList) {
                 if (feedback.getHotid().toString().equals(hot.getId())) {
-                    String newFeedback = hot.getSqlMap().get("feedbacks") == null ? "" : hot.getSqlMap().get("feedbacks") + "," + feedback.getContent();
+                    String newFeedback = null;
+                    if (hot.getSqlMap().get("feedbacks") == null) {
+                        newFeedback = feedback.getContent();
+                    } else {
+                        newFeedback = hot.getSqlMap().get("feedbacks") + "," + feedback.getContent();
+                    }
                     hot.getSqlMap().put("feedbacks", newFeedback);
                 }
             }
